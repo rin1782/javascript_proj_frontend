@@ -3,7 +3,7 @@ const newKidForm = document.getElementById("kidForm")
 
 function allKids(){
     fetch(endPoint)
-    .then(resp => resp.json())
+    .then(jsonToJS)
     .then(displayKids)
 }
 
@@ -23,6 +23,7 @@ function appendKid(kid){
 
 function newKid(e){
     e.preventDefault()
+    
     const userInput = e.target.children[1].value
     const body = {
         kid: {
@@ -36,8 +37,11 @@ function newKid(e){
         },
         body: JSON.stringify(body)
     }
+
+    e.target.reset()
+
     fetch(endPoint, options)
-    .then(resp => resp.json())
+    .then(jsonToJS)
     .then(appendKid)
 
 }
