@@ -1,5 +1,7 @@
+const kidsUrl = "http://localhost:3000/kids"
+
 function allKids(){
-    fetch("http://localhost:3000/kids")
+    fetch(kidsUrl)
     .then(resp => resp.json())
     .then(displayKids)
 }
@@ -10,5 +12,6 @@ function displayKids(kids){
         const li = document.createElement("li")
         li.innerText = kid.name
         kidsDiv.append(li)
+        displayChores(kid.chores, li)
     }
 }
