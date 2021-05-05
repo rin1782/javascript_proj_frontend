@@ -1,15 +1,15 @@
 const endPoint = "http://localhost:3000/kids"
 const newKidForm = document.getElementById("kidForm")
 
-class Kid {
-    constructor(name, id){
-        this.name = name;
-        this.id = id;
-    }
+// class Kid {
+//     constructor(name, id){
+//         this.name = name;
+//         this.id = id;
+//     }
     
-}
+// }
 
-let tiff = new Kid("Tiff", 9)
+// let tiff = new Kid("Tiff", 9)
 
 function allKids(){
     fetch(endPoint)
@@ -24,11 +24,21 @@ function displayKids(kids){
 }
 
 function appendKid(kid){
-    const kidsDiv = document.getElementById("kidsContainer")
+    const kidsDiv = document.getElementById("allKids")
     const li = document.createElement("li")
     li.innerText = kid.name
+    li.addEventListener("click", (e) => allKidsShow(kid))
     kidsDiv.append(li)
     displayChores(kid.chores, li)
+}
+
+function allKidsShow(kid){
+    const newKids = document.getElementById("kidsContainer")
+    newKids.children[1].innerHTML = " "
+    newKids.children[0].remove()
+    appendKid(kid)
+    newChoreForm()
+    
 }
 
 function newKid(e){
