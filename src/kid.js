@@ -8,13 +8,17 @@ function allKids(){
 }
 
 function displayKids(kids){
-    const kidsDiv = document.getElementById("kidsContainer")
     for (let kid of kids){
-        const li = document.createElement("li")
-        li.innerText = kid.name
-        kidsDiv.append(li)
-        displayChores(kid.chores, li)
+        appendKid(kid)
     }
+}
+
+function appendKid(kid){
+    const kidsDiv = document.getElementById("kidsContainer")
+    const li = document.createElement("li")
+    li.innerText = kid.name
+    kidsDiv.append(li)
+    displayChores(kid.chores, li)
 }
 
 function newKid(e){
@@ -34,6 +38,6 @@ function newKid(e){
     }
     fetch(endPoint, options)
     .then(resp => resp.json())
-    .then(kid => console.log(kid))
+    .then(appendKid)
 
 }
