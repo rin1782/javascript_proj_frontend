@@ -1,3 +1,3 @@
-newChoreForm.addEventListener("submit", addChore)
+newKidForm.addEventListener("submit", newKid)
 
 allKids()

@@ -1,0 +1,27 @@
+body {
+    background-color: rgb(70, 171, 113);
+    
+}
+
+div#greeting {
+    border-style: dotted;
+    text-align: center;
+    font-family: fantasy;
+    color:blanchedalmond;
+    background-color: black;
+    
+}
+
+div#newPets {
+    border-style: dotted;
+    text-align: center;
+    background-color: black;
+    color: blanchedalmond;
+    padding-top:.5em;
+    padding-bottom: .5em;
+
+}
+
+div#kidsContainer {
+    text-align: center;
+}
