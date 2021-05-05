@@ -1,6 +1,16 @@
 const endPoint = "http://localhost:3000/kids"
 const newKidForm = document.getElementById("kidForm")
 
+class Kid {
+    constructor(name, id){
+        this.name = name;
+        this.id = id;
+    }
+    
+}
+
+let tiff = new Kid("Tiff", 9)
+
 function allKids(){
     fetch(endPoint)
     .then(jsonToJS)
