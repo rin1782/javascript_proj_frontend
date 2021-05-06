@@ -6,24 +6,25 @@
 // }
 
 function displayChores(chores, element){
-    const h3 = document.createElement("h3")
-    element.append(h3)
+    const ul = document.createElement("ul")
+    element.append(ul)
 
     for (let chore of chores){
         const choreLi = document.createElement("li")
         const choreDone = document.createElement("button")
         choreDone.innerText = "All Done!"
         choreLi.innerText = chore.name
-        choreDone.addEventListener('click', (e) => deleteChore(chore.id, choreLi))
+        choreDone.addEventListener("click", (e) => deleteChore(chore.id, choreLi))
         choreLi.append(choreDone)
-        h3.append(choreLi)
+        ul.append(choreLi)
     }
 }
 
 function deleteChore(choreId, choreLi){
     fetch(`http://localhost:3000/chores/${choreId}`, {
         method: "DELETE"
-    }).then(jsonToJS)
+    })
+    .then(jsonToJS)
     .then(m => {
         choreLi.remove()
     })
@@ -43,5 +44,5 @@ function newChoreForm(){
 }
 
 function addChore(e){
-    e.preventDefault()
+    e.preventDefault
 }

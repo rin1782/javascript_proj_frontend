@@ -1,6 +1,5 @@
-newKidForm.addEventListener("submit", newKid)
-
-allKids()
+newKidForm.addEventListener("submit", Kid.newKid)
+Kid.allKids()
 
 function jsonToJS(resp){
     return resp.json()
