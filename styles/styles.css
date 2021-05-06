@@ -12,7 +12,7 @@ div#greeting {
     
 }
 
-div#newPets {
+form#kidForm {
     border-style: dotted;
     text-align: center;
     background-color: black;
@@ -23,5 +23,5 @@ div#newPets {
 }
 
 div#kidsContainer {
-    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
