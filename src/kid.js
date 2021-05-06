@@ -25,11 +25,11 @@ function displayKids(kids){
 
 function appendKid(kid){
     const kidsDiv = document.getElementById("allKids")
-    const li = document.createElement("li")
-    li.innerText = kid.name
-    li.addEventListener("click", (e) => allKidsShow(kid))
-    kidsDiv.append(li)
-    displayChores(kid.chores, li)
+    const kidName = document.createElement("h2")
+    kidName.innerText = kid.name
+    kidName.addEventListener("click", (e) => allKidsShow(kid))
+    kidsDiv.append(kidName)
+    displayChores(kid.chores, kidName)
 }
 
 function allKidsShow(kid){

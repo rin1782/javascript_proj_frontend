@@ -6,8 +6,8 @@
 // }
 
 function displayChores(chores, element){
-    const ul = document.createElement("ul")
-    element.append(ul)
+    const h3 = document.createElement("h3")
+    element.append(h3)
 
     for (let chore of chores){
         const choreLi = document.createElement("li")
@@ -16,7 +16,7 @@ function displayChores(chores, element){
         choreLi.innerText = chore.name
         choreDone.addEventListener('click', (e) => deleteChore(chore.id, choreLi))
         choreLi.append(choreDone)
-        ul.append(choreLi)
+        h3.append(choreLi)
     }
 }
 
