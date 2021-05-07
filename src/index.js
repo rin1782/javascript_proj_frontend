@@ -1,3 +1,4 @@
+
 newKidForm.addEventListener("submit", Kid.newKid)
 Kid.allKids()
 

@@ -6,29 +6,36 @@ class Kid {
     constructor(kid) {
         this.name = kid.name
         this.id = kid.id
-        this.chores = kid.chores
+        this.chores = kid.chores.map(chore => new Chore(chore))
+    }
+
+    displayChores(element) {
+        const ul = document.createElement("ul")
+        element.append(ul)
+        for (let chore of this.chores) {
+           chore.addChoreToDOM(ul)
+        }
     }
 
     
-    appendKid(){
-
+    appendKid() {
         const kidsDiv = document.getElementById("allKids")
+        const li = document.createElement("li")
         const kidName = document.createElement("h2")
         kidName.innerText = this.name
-        kidName.addEventListener("click", this.allKidsShow.bind(this))
+        li.addEventListener("click", this.allKidsShow.bind(this))
         kidsDiv.append(kidName)
-        displayChores(this.chores, kidName)
+        kidName.append(li)
+        this.displayChores(kidName)
     }
 
     allKidsShow() {
-    
-
         const newKids = document.getElementById("kidsContainer")
+        const appendKids = document.getElementById("allKids")
         newKids.children[1].innerHTML = " "
         newKids.children[0].remove()
         this.appendKid()
-        newChoreForm()
-        
+        Chore.newChoreForm()
     }
 
     static allKids(){
