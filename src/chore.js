@@ -1,31 +1,13 @@
 class Chore {
 
-    constructor(chore) {
-        this.id = chore.id
-        this.name = chore.name
-        this.kid_id = chore.kid_id
-    }
+    static choresAll = []
 
-    static newChoreForm(){
-        const kidsDiv = document.getElementById("allKids")
-        const choreForm = `
-            <form id="choreForm">
-                <label>Add a Chore:</label>
-                <input id="choreName"/>
-                <input type="submit" value="Add Chore" />
-            </form>
-        `
-        kidsDiv.innerHTML += choreForm
-        document.getElementById("choreForm").addEventListener("submit", addChore)
+    constructor({id, name, kid_id}) {
+        this.id = id
+        this.name = name
+        this.kid_id = kid_id
+        Chore.choresAll.push(this)
     }
-
-    // displayChores(element) {
-    //     const ul = document.createElement("ul")
-    //     element.append(ul)
-    //     for (let chore of chores) {
-    //         addChoreToDOM()
-    //     }
-    // }
 
     addChoreToDOM(ul) {
         const choreLi = document.createElement("li")
@@ -47,12 +29,43 @@ class Chore {
         .then(jsonToJS)
         .then(m => {
             choreLi.remove()
+            Chore.choresAll.filter(chore => chore.id !== this.id)
+            
         })
     }
 
-    addChore(e){
-        e.preventDefault
+    static addChore(e) {
+        e.preventDefault()
+        const userInput = e.target.children[1].value
+        const kidId = e.target.children[2].id
+        const body = {
+            chore: {
+                name: userInput,
+                kid_id: kidId
+            }
+        }
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify(body)
+        }
+
+        e.target.reset()
+
+        fetch("http://localhost:3000/chores", options)
+        .then(jsonToJS)
+        .then(chore => {
+            let ul = document.getElementById(`kid-${chore.kid_id}`)
+            let newChore = new Chore(chore)
+            newChore.addChoreToDOM(ul)
+        })
     }
 }
+      
+
 
 
