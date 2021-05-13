@@ -9,10 +9,8 @@ class ChoreApi {
         fetch(this.baseUrl)
         .then(r => r.json())
         .then( json => {
-            console.log(json)
             json.forEach(element => {
                 const c = new Chore({id: element.id, name: element.name})
-                c.attachToDom()
             })
         })
     }
@@ -20,6 +18,7 @@ class ChoreApi {
     createChore(){
         const choreInfo = {
             name: newChoreInput.value,
+            kid_id: choreOwnerInput.value
        }
     
        const configObj = {
@@ -36,9 +35,13 @@ class ChoreApi {
         .then(r => r.json())
         .then(json => {
             // renderItem(json.data)
-            const c = new Chore({id: json.data.id, ...json.data.attributes})
-            c.attachToDom()
+            const c = new Chore({id: json.id, name: json.name})
+            c.attachToKid()
         })
+    }
+
+    attachToKid(){
+        debugger
     }
 
     sendPatch = (chore) => {

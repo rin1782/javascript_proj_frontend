@@ -3,7 +3,7 @@ body {
     
 }
 
-div#greeting {
+div#header {
     border-style: dotted;
     text-align: center;
     font-family: fantasy;
@@ -12,7 +12,7 @@ div#greeting {
     
 }
 
-form#kidForm {
+div#chore-form-container {
     border-style: dotted;
     text-align: center;
     background-color: black;
@@ -33,4 +33,9 @@ h2 {
     background-color: rgb(82, 90, 172);
     text-align: center;
     border-style: groove;
+}
+
+button {
+    color:blueviolet;
+    block-size: auto;
 }

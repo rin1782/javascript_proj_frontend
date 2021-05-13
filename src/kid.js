@@ -9,9 +9,14 @@ class Kid{
         this.active = false
 
         this.element = document.createElement('button')
+        
 
         Kid.all.push(this)
     }
+
+        chores(){
+            return Chore.all.filter((chore) => chore.kid_id == this.id)
+        }
 
     
 
@@ -27,20 +32,23 @@ class Kid{
     }
 
     addListeners(){
-        this.element.addEventListener('click', this.setActiveCategory)
+        this.element.addEventListener('click', this.setActiveKid)
     }
+    
 
-    setActiveCategory = (e) => {
+    setActiveKid = (e) => {
+        let filteredKid
         Kid.all.forEach(k => {
             if(k.element === this.element && !this.active){
                 k.element.classList.add('activated')
                 k.active = true
+                filteredKid = k
             }else{
                 k.element.classList.remove('activated')
                 k.active = false
             }
+            Chore.filterByKid(filteredKid)
         })
-        
     }
 
 
