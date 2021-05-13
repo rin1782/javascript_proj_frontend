@@ -1,23 +1,19 @@
-newKidForm = document.getElementById("kidForm")
-newKidForm.addEventListener("submit", Kid.newKid)
-Kid.allKids()
+const base = 'http://localhost:3000'
+const choreApi =  new ChoreApi(base)
+const kidApi = new KidApi(base)
+const list = document.getElementById('choresList')
+const form = document.getElementById('choreForm')
+const newChoreInput = document.getElementById('chore-name')
 
-function jsonToJS(resp){
-    return resp.json()
+form.addEventListener('submit', handleSubmit)
+
+function handleSubmit(e){
+   e.preventDefault()
+   choreApi.createChore()
+   e.target.reset()
 }
 
 
-function refreshPage() {
-    document.getElementById("kidsContainer").innerHTML = `
-        <form id="kidForm">
-            <label>Add a Child:</label>
-            <input type="text" placeholder="name">
-            <input type="submit" value="Add Child">
-        </form>
-        <div id="allKids"></div>
-    `
+choreApi.getChores()
+kidApi.getKids()
 
-    Kid.refreshDisplayKids()
-
-    
-}

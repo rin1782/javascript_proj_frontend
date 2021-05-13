@@ -1,71 +1,83 @@
-class Chore {
+class Chore{
 
-    static choresAll = []
+    static all = []
+    static choreContainer = document.getElementById('choresList')
 
-    constructor({id, name, kid_id}) {
-        this.id = id
-        this.name = name
+    constructor({id, name, kid_id}){
+        // setting the properties of each item
+        this.name = name 
+        this.id = id 
         this.kid_id = kid_id
-        Chore.choresAll.push(this)
+
+        // setup the html element that will contain the item
+        this.element = document.createElement('li')
+        this.element.dataset["id"] = id
+        this.element.id = `chore-${id}`
+        
+        this.element.addEventListener('click', this.handleLiClick)
+
+        // remembering all the items 
+        Chore.all.push(this)
     }
 
-    addChoreToDOM(ul) {
-        const choreLi = document.createElement("li")
-        const choreDone = document.createElement("button")
-        choreDone.innerText = "All Done!"
-        choreDone.id = this.id
-        choreLi.innerText = this.name
-        choreDone.addEventListener("click", e => {
-            this.deleteChore(choreLi)
-        })
-        choreLi.append(choreDone)
-        ul.append(choreLi)
-    }
-
-    deleteChore(choreLi) {
-        fetch(`http://localhost:3000/chores/${this.id}`, {
-            method: "DELETE"
-        })
-        .then(jsonToJS)
-        .then(m => {
-            choreLi.remove()
-            Chore.choresAll.filter(chore => chore.id !== this.id)
-            
-        })
-    }
-
-    static addChore(e) {
-        e.preventDefault()
-        const userInput = e.target.children[1].value
-        const kidId = e.target.children[2].id
-        const body = {
-            chore: {
-                name: userInput,
-                kid_id: kidId
-            }
+    // arrow function b/c it is used as a callback in an event listener
+    handleLiClick = (e) => {
+        if(e.target.innerText === "Edit"){
+            e.target.innerText = "Save"
+            this.createEditFields(e.target)
+        } else if (e.target.innerText === "Delete"){
+            this.deleteChore(e)
+        } else if(e.target.innerText === "Save"){
+            e.target.innerText = "Edit"
+            // save this info to the DB
+            // turn all input fields back into spans
+            this.saveUpdatedChore()
         }
-
-        const options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            },
-            body: JSON.stringify(body)
-        }
-
-        e.target.reset()
-
-        fetch("http://localhost:3000/chores", options)
-        .then(jsonToJS)
-        .then(chore => {
-            let ul = document.getElementById(`kid-${chore.kid_id}`)
-            let newChore = new Chore(chore)
-            newChore.addChoreToDOM(ul)
-        })
     }
+
+    createEditFields = (editBtn) =>{
+        const li = this.element
+        const div = this.element.querySelector('div')
+    
+        for(const e of div.children){
+            let inputValue = e.innerText
+            let name = e.classList[0]
+            e.outerHTML = `<input type="text" class="edit-${name}" value="${inputValue}">`
+        }
+    }
+
+    deleteChore = (e) => {
+        this.element.remove() // remove it before the fetch request 
+        choreApi.deleteChore(this.id)
+    }
+
+    saveUpdatedChore = () => {
+        this.name = this.element.querySelector(".edit-name").value
+    
+       choreApi.sendPatch(this)
+    }
+
+    render(){
+        this.element.innerHTML = `
+            <div data-id="${this.id}">
+                <strong class="name">${this.name}</strong>
+            </div>
+            <button class="edit" data-id="${this.id}">Edit</button>
+            <button class="delete" data-id="${this.id}">Delete</button>
+        `
+        return this.element
+    }
+
+    attachToDom(){
+        this.render()
+        Chore.choreContainer.appendChild(this.element)
+        // Item.container.appendChild(this.render())
+
+        // adding the event listener could be placed here instead of the constructor function
+    }
+
+    
+    
+    
+   
 }
-      
-
-
-

@@ -1,120 +1,54 @@
-const kidsURL = "http://localhost:3000/kids"
+class Kid{
+    static all = []
 
+    static kidsContainer = document.getElementById('kidsContainer')
 
-class Kid {
-
-    static kidsAll = []
-
-    constructor({name, id, chores}) {
+    constructor({id, name }){
+        this.id = id 
         this.name = name
-        this.id = id
-        chores.forEach(chore => new Chore(chore))
-        Kid.kidsAll.push(this)
-        
-    }
+        this.active = false
 
-    get chores() {
-        return Chore.choresAll.filter(chore => chore.kid_id === this.id)
-    }
+        this.element = document.createElement('button')
 
-    displayChores(element) {
-        const ul = document.createElement("ul")
-        ul.id = `kid-${this.id}`
-        element.append(ul)
-        for (let chore of this.chores) {
-           chore.addChoreToDOM(ul)
-        }
+        Kid.all.push(this)
     }
 
     
-    appendKid() {
-        const kidsDiv = document.getElementById("allKids")
-        // const li = document.createElement("li")
-        const kidName = document.createElement("h2")
-        const ul = document.createElement("ul")
-        kidName.innerText = this.name
-        kidName.id = `allKids-name-${this.id}`
-        // li.innerText = "Click here for this week's chores!"
-        kidName.addEventListener("click", this.allKidsShow.bind(this))
-        kidsDiv.append(kidName)
-        // kidName.append(li)
-        kidsDiv.append(ul)
-        this.displayChores(kidName)
+
+    render(){
+        this.element.innerText = this.name 
+        this.element.id = `kid-${this.id}`
+        return this.element
     }
 
-    allKidsShow() {
-        const newKids = document.getElementById("kidsContainer")
-        const homeBtn = document.createElement("button")
-        const appendKids = document.getElementById("allKids")
-        newKids.children[1].innerHTML = " "
-        newKids.children[0].remove()
-        homeBtn.addEventListener("click", refreshPage)
-        homeBtn.innerText = "Back to all kid's chores"
-        newKids.append(homeBtn)
-        newKids.append(appendKids)
-        this.appendKid()
-        this.newChoreForm()
+    addToDom(){
+        Kid.kidsContainer.append(this.render())
+        this.addListeners()
     }
 
-    newChoreForm(){
-        const kidsDiv = document.getElementById("kidsContainer")
-        const choreForm = `
-            <form id="choreForm">
-                <label>Add a Chore:</label>
-                <input id="choreName"/>
-                <input type="hidden" id="${this.id}"/>
-                <input type="submit" value="Add Chore" />
-            </form>
-        `
-        kidsDiv.innerHTML += choreForm
-        document.getElementById("choreForm").addEventListener("submit", Chore.addChore.bind(this))
+    addListeners(){
+        this.element.addEventListener('click', this.setActiveCategory)
     }
 
-    static allKids(){
-        fetch(kidsURL)
-        .then(jsonToJS)
-        .then(this.displayKids)
-    }
-    
-    static displayKids(kids){
-        for (let kid of kids){
-            let newKid = new Kid(kid)
-            newKid.appendKid()
-        }
-    }
-
-    static refreshDisplayKids() {
-        for (let kid of Kid.kidsAll) {
-            kid.appendKid()
-        
-        }
-    }
-
-    static newKid(e){
-
-        e.preventDefault()
-    
-        const userInput = e.target.children[1].value
-        const body = {
-            kid: {
-                name: userInput
+    setActiveCategory = (e) => {
+        Kid.all.forEach(k => {
+            if(k.element === this.element && !this.active){
+                k.element.classList.add('activated')
+                k.active = true
+            }else{
+                k.element.classList.remove('activated')
+                k.active = false
             }
-        }
-        const options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-        }
-
-        e.target.reset()
-
-        fetch(kidsURL, options)
-        .then(jsonToJS)
-        .then(kid => {
-            let newKid = new Kid(kid)
-            newKid.appendKid(kid)
         })
+        
+    }
+
+
+    addToDropDown(){
+        const dropdown = document.getElementById('kid-dropdown')
+        const option = document.createElement('option')
+        option.value  = this.id 
+        option.innerText = this.name
+        dropdown.append(option)
     }
 }
