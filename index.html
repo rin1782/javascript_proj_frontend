@@ -5,36 +5,20 @@
     <title>Kid's Chore Chart</title>
 </head>
 <body>
-    <div id="header">
-        <h1>Kid's Weekly Chore Chart</h1>
+    
+    <div id="homePage">
+        <h1>Weekly Chores</h1>
+            <h3>Click your name to start your checklist!</h3>
+        <ul id="kid-name"></ul>
+    </div>
+
+    <div id="kidChorePage">
+        
     </div>
        
-    <div id="kidsContainer">
-        <h2>Click your name to see your chores:</h2>
-    </div>
-       
     
-       <div id="chore-form-container">
-        <h3>Add a new Chore:</h3>
-       <form id="choreForm">
-           <label for="chore-name">Chore Name:</label>
-           <input type="text" name="name" id="chore-name"><br>
-           <br>
-           <label for="kid-dropdown">Add to who?:</label>
-           <select name="kid_id" type="kid_name" id="kid-dropdown">
+       <script type="text/javascript" src="src/index.js"></script>
 
-           </select><br><br>
-           <input type="submit" value="Add Chore">
-       </form>
-    </div>
-    
-    
 
-    <script src="src/kidApi.js"></script>
-    <script src="src/choreApi.js"></script>
-    <script src="src/kid.js"></script>
-    <script src="src/chore.js"></script>
-    <script src="src/index.js"></script>
-    
-</body>
+    </body>
 </html>

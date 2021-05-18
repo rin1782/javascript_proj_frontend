@@ -7,12 +7,12 @@ div#header {
     border-style: dotted;
     text-align: center;
     font-family: fantasy;
-    color:rgb(230, 122, 247);
+    color:  rgb(116, 230, 165);
     background-color: rgb(23, 19, 19);
     
 }
 
-div#chore-form-container {
+/* div#chore-form-container {
     border-style: dotted;
     text-align: center;
     background-color: black;
@@ -38,4 +38,4 @@ h2 {
 button {
     color:blueviolet;
     block-size: auto;
-}
+} */
